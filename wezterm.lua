@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local sessionizer = require("sessionizer")
 local config = wezterm.config_builder()
 
 -- Settings
@@ -309,6 +310,12 @@ config.keys = {
 		mods = 'LEADER',
 		action = wezterm.action.ShowLauncherArgs({ flags = "WORKSPACES" }),
 	},
+	-- Sessionizer
+	{
+		key = "f",
+		mods = "LEADER",
+		action = wezterm.action_callback(sessionizer.open),
+	}
 }
 
 return config
