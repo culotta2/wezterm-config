@@ -9,11 +9,11 @@ config.send_composed_key_when_right_alt_is_pressed = false
 -- Key tables
 local key_tables = {
 	resize_font = {
-		{ key = "k",      action = wezterm.action.IncreaseFontSize },
-		{ key = "j",      action = wezterm.action.DecreaseFontSize },
-		{ key = "r",      action = wezterm.action.ResetFontSize },
+		{ key = "k", action = wezterm.action.IncreaseFontSize },
+		{ key = "j", action = wezterm.action.DecreaseFontSize },
+		{ key = "r", action = wezterm.action.ResetFontSize },
 		{ key = "Escape", action = "PopKeyTable" },
-		{ key = "q",      action = "PopKeyTable" },
+		{ key = "q", action = "PopKeyTable" },
 	},
 	copy_mode = {
 		{key="c", mods="CTRL", action=wezterm.action.CopyMode("Close")},
@@ -25,14 +25,14 @@ local key_tables = {
 		{key="k", mods="NONE", action=wezterm.action.CopyMode("MoveUp")},
 		{key="l", mods="NONE", action=wezterm.action.CopyMode("MoveRight")},
 
-		{key="Enter", mods="NONE",  action=wezterm.action.CopyMode("MoveToStartOfNextLine")},
-		{key="w",          mods="NONE", action=wezterm.action.CopyMode("MoveForwardWord")},
-		{key="b",         mods="NONE",  action=wezterm.action.CopyMode("MoveBackwardWord")},
-		{key="0",     mods="NONE",  action=wezterm.action.CopyMode("MoveToStartOfLine")},
-		{key="$",     mods="NONE",  action=wezterm.action.CopyMode("MoveToEndOfLineContent")},
-		{key="$",     mods="SHIFT", action=wezterm.action.CopyMode("MoveToEndOfLineContent")},
-		{key="^",     mods="NONE",  action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
-		{key="^",     mods="SHIFT", action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
+		{key="Enter", mods="NONE", action=wezterm.action.CopyMode("MoveToStartOfNextLine")},
+		{key="w", mods="NONE", action=wezterm.action.CopyMode("MoveForwardWord")},
+		{key="b", mods="NONE", action=wezterm.action.CopyMode("MoveBackwardWord")},
+		{key="0", mods="NONE", action=wezterm.action.CopyMode("MoveToStartOfLine")},
+		{key="$", mods="NONE", action=wezterm.action.CopyMode("MoveToEndOfLineContent")},
+		{key="$", mods="SHIFT", action=wezterm.action.CopyMode("MoveToEndOfLineContent")},
+		{key="^", mods="NONE", action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
+		{key="^", mods="SHIFT", action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
 
 		{key="v", mods="NONE",  action=wezterm.action.CopyMode{SetSelectionMode="Cell"}},
 		{key="V", mods="NONE",  action=wezterm.action.CopyMode{SetSelectionMode="Line"}},
@@ -107,6 +107,13 @@ config.inactive_pane_hsb = {
 config.leader = { key = "b", mods = "CTRL", timeout_miliseconds = 1000 }
 config.disable_default_key_bindings = true
 
+-- Create unix muxer
+config.unix_domains = {
+	{
+		name = "unix",
+	},
+}
+
 config.keys = {
 	-- {
 	-- 	key="P",
@@ -162,11 +169,25 @@ config.keys = {
 		key="x",
 		action = wezterm.action({CloseCurrentPane={confirm=true}}),
 	},
-	-- TODO: Possibly change to capital N?
 	{
 		mods="LEADER",
 		key="p",
 		action = wezterm.action.ActivateTabRelative(-1)
+	},
+	{
+		key = "r",
+		mods = "LEADER",
+		action = wezterm.action.PromptInputLine({
+			description = "Enter new name for tab",
+			action = wezterm.action_callback(
+				---@diagnostic disable-next-line: unused-local
+				function (window, pane, line)
+					if line then
+						window:active_tab():set_title(line)
+					end
+				end
+			)
+		}),
 	},
 	{
 		mods="LEADER",
@@ -257,6 +278,36 @@ config.keys = {
 		mods="LEADER",
 		key="9",
 		action = wezterm.action({ActivateTab=9})
+	},
+	-- Sessionizer
+	{
+		key = "a",
+		mods = "LEADER",
+		action = wezterm.action.AttachDomain("unix"),
+	},
+	{
+		key = "d",
+		mods = "LEADER",
+		action = wezterm.action.DetachDomain({ DomainName = "unix" }),
+	},
+	{
+		key = "$",
+		mods = "LEADER|SHIFT",
+		action = wezterm.action.PromptInputLine({
+			description = "Enter a new name for the session",
+			---@diagnostic disable-next-line: unused-local
+			action = wezterm.action_callback(function(window, pane, line)
+				if line then
+					---@diagnostic disable-next-line: undefined-global
+					mux.rename_workspace(window:mux_window():get_workspace(), line)
+				end
+			end)
+		}),
+	},
+	{
+		key = 's',
+		mods = 'LEADER',
+		action = wezterm.action.ShowLauncherArgs({ flags = "WORKSPACES" }),
 	},
 }
 
