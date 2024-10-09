@@ -312,7 +312,7 @@ config.keys = {
 	},
 	-- Sessionizer
 	{
-		key = "f",
+		key = "o",
 		mods = "LEADER",
 		action = wezterm.action_callback(sessionizer.open),
 	}
