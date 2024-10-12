@@ -306,7 +306,7 @@ config.keys = {
 		}),
 	},
 	{
-		key = 's',
+		key = "f",
 		mods = 'LEADER',
 		action = wezterm.action.ShowLauncherArgs({ flags = "WORKSPACES" }),
 	},
