@@ -2,11 +2,6 @@ local wezterm = require("wezterm")
 local sessionizer = require("sessionizer")
 local config = wezterm.config_builder()
 
--- Settings
-config.term = "xterm-256-color"
-config.send_composed_key_when_left_alt_is_pressed = false
-config.send_composed_key_when_right_alt_is_pressed = false
-
 -- Key tables
 local key_tables = {
 	resize_font = {
@@ -103,6 +98,12 @@ config.inactive_pane_hsb = {
 	saturation = 0.9,
 	brightness = 0.5,
 }
+
+-- Settings
+config.term = "xterm-256-color"
+config.send_composed_key_when_left_alt_is_pressed = false
+config.send_composed_key_when_right_alt_is_pressed = false
+config.tab_and_split_indices_are_zero_based = true
 
 -- Mappings
 config.leader = { key = "b", mods = "CTRL", timeout_miliseconds = 1000 }
