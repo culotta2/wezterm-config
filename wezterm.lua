@@ -100,7 +100,7 @@ config.inactive_pane_hsb = {
 }
 
 -- Settings
-config.term = "xterm-256-color"
+-- config.term = "xterm-256-color"
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = false
 config.tab_and_split_indices_are_zero_based = true
@@ -209,7 +209,7 @@ config.keys = {
 	{
 		mods="LEADER",
 		key="v",
-		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" })
+		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" })
 	},
 	{
 		mods="LEADER",
