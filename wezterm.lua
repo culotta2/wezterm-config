@@ -145,7 +145,8 @@ config.keys = {
 	},
 	-- Copy Mode
 	{key="[", mods="LEADER", action=wezterm.action.ActivateCopyMode},
-	{key="]", mods="LEADER", action=wezterm.action.PasteFrom("PrimarySelection")},
+	-- {key="]", mods="LEADER", action=wezterm.action.PasteFrom("PrimarySelection")},
+	{key="]", mods="LEADER", action=wezterm.action.PasteFrom("Clipboard")},
 	-- Terminal multiplex keys
 	{
 		mods="LEADER",
