@@ -14,7 +14,7 @@ M.open = function(window, pane)
 		fd,
 		"-HI",
 		".git$",
-		"--max-depth=5",
+		"--max-depth=8",
 		"--prune",
 		project_dir
 		-- add more paths here

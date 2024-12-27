@@ -27,8 +27,8 @@ local key_tables = {
 		{key="0", mods="NONE", action=wezterm.action.CopyMode("MoveToStartOfLine")},
 		{key="$", mods="NONE", action=wezterm.action.CopyMode("MoveToEndOfLineContent")},
 		{key="$", mods="SHIFT", action=wezterm.action.CopyMode("MoveToEndOfLineContent")},
-		{key="^", mods="NONE", action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
-		{key="^", mods="SHIFT", action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
+		{key="_", mods="NONE", action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
+		{key="_", mods="SHIFT", action=wezterm.action.CopyMode("MoveToStartOfLineContent")},
 
 		{key="v", mods="NONE",  action=wezterm.action.CopyMode{SetSelectionMode="Cell"}},
 		{key="V", mods="NONE",  action=wezterm.action.CopyMode{SetSelectionMode="Line"}},
@@ -50,11 +50,8 @@ local key_tables = {
 		{key="O", mods="NONE",  action=wezterm.action.CopyMode("MoveToSelectionOtherEndHoriz")},
 		{key="O", mods="SHIFT", action=wezterm.action.CopyMode("MoveToSelectionOtherEndHoriz")},
 
-		{key="PageUp",   mods="NONE", action=wezterm.action.CopyMode("PageUp")},
-		{key="PageDown", mods="NONE", action=wezterm.action.CopyMode("PageDown")},
-
-		{key="b", mods="CTRL", action=wezterm.action.CopyMode("PageUp")},
-		{key="f", mods="CTRL", action=wezterm.action.CopyMode("PageDown")},
+		{key="u", mods="CTRL", action=wezterm.action.CopyMode("PageUp")},
+		{key="d", mods="CTRL", action=wezterm.action.CopyMode("PageDown")},
 
 		-- Enter y to copy and quit the copy mode.
 		{key="y", mods="NONE", action=wezterm.action.Multiple{
@@ -84,8 +81,12 @@ local key_tables = {
 config.key_tables = key_tables
 
 -- Appearance
+config.enable_wayland = false
 config.color_scheme = "Catppuccin Mocha"
-config.font = wezterm.font("FiraCode Nerd Font Mono")
+config.font = wezterm.font_with_fallback({
+	"FiraCodeNerdFontMono",
+	"NotoColorEmoji"
+})
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
