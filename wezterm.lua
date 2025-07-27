@@ -313,12 +313,16 @@ config.keys = {
 		mods = 'LEADER',
 		action = wezterm.action.ShowLauncherArgs({ flags = "WORKSPACES" }),
 	},
-	-- Sessionizer
 	{
 		key = "o",
 		mods = "LEADER",
 		action = wezterm.action_callback(sessionizer.open),
-	}
+	},
+	{
+		key = "S",
+		mods = "LEADER",
+		action = wezterm.action.SwitchToWorkspace
+	},
 }
 
 return config
